@@ -1,0 +1,8 @@
+#sanfona div .p-card-body {
+    padding: 8px !important;
+}
+
+#sanfona div .p-card-content {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
