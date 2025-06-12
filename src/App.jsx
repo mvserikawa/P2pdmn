@@ -1,5 +1,6 @@
 import React from 'react'
-import Sanfona from './components/sanfona'
+import Sanfona from './components/Sanfona'
+import Busca from './components/Busca'
 
 const itens = [
   {
@@ -17,8 +18,11 @@ const itens = [
 ]
 
 const App = () => {
+  const expressaoJSX = <Busca/>
   return (
-    <Sanfona id="sanfona" itens={itens} />
+    <div>
+      {expressaoJSX}
+    </div>
   )
 }
 
