@@ -3,23 +3,23 @@ import {IconField} from 'primereact/iconfield'
 import {InputText} from 'primereact/inputtext'
 import {InputIcon} from 'primereact/inputicon'
 import axios from 'axios'
+import striptags from 'striptags'
 
 const Busca = () => {
-    const [termoDeBusca, setTermoDeBusca] = useState('') 
+    const [termoDeBusca, setTermoDeBusca] = useState('São Paulo') 
+    const [resultados, setResultados] = useState([])
 
     useEffect(() => {
         const fazerBusca = async () => {
-            const { data } = await axios.get('https://openweathermap.org/forecast5#name5', {
-                params: {
-                    q: city,
-                    appid: process.env.OPENWEATHER_KEY,
-                    units: 'metric', 
-                    lang: 'pt_br' 
-                }
+            const { data } = await axios.get('http://localhost:3000/forecast', {
+              params: { 
+                city: termoDeBusca 
+                }     
             })
-            console.log(data)
+            setResultados(data)
         }
-        fazerBusca()
+        if(termoDeBusca)
+            fazerBusca()
     }, [termoDeBusca])
 
   return (
@@ -32,6 +32,24 @@ const Busca = () => {
             value={termoDeBusca}
             />
         </IconField>
+        {}
+        {
+            resultados.list?.map((resultado, index) => (
+                <div
+                key={index}
+                className='my-2 border border-1 border-400'>
+                <div
+                className='border-bottom border border-1 border-400 p-2
+                font-bold'>
+                    {resultado.city.name} - {resultado.main.temp}°C
+                </div>
+                <div className='p-2'>
+                    {resultado.weather[0].description}
+                </div>
+                </div>
+            ))
+        }
+
     </div>
   )
 }

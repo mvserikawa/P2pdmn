@@ -14,7 +14,7 @@ const Sanfona = ({itens}) => {
 
     const expressaoJSX = itens.map((item, indice) => {
       const classExibirIcone = indice === indiceAtivo ? 'down': 'right'
-      const classExibirConteudo = indice === indiceAtivo ? 'hidden' : ''
+      const classExibirConteudo = indice === indiceAtivo ? '' : 'hidden'
 
     return (
         <Card key={indice} className='border-1 border-400'>
