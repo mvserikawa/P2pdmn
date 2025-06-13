@@ -21,8 +21,8 @@ app.get('/forecast', async (req, res) => {
 
     const response = await weatherClient.get('forecast', {
       params: {
-        q: 'city',
-        appid: 'process.env.OPENWEATHER_KEY',
+        q: city,
+        appid: process.env.OPENWEATHER_KEY,
         units: 'metric', 
         lang: 'pt_br' 
       }

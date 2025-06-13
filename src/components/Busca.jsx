@@ -11,7 +11,7 @@ const Busca = () => {
 
     useEffect(() => {
         const fazerBusca = async () => {
-            const { data } = await axios.get('http://localhost:3000/forecast', {
+            const { data } = await axios.get('http://localhost:3000/search', {
               params: { 
                 city: termoDeBusca 
                 }     
@@ -34,19 +34,8 @@ const Busca = () => {
         </IconField>
         {}
         {
-            resultados.list?.map((resultado, index) => (
-                <div
-                key={index}
-                className='my-2 border border-1 border-400'>
-                <div
-                className='border-bottom border border-1 border-400 p-2
-                font-bold'>
-                    {resultado.city.name} - {resultado.main.temp}°C
-                </div>
-                <div className='p-2'>
-                    {resultado.weather[0].description}
-                </div>
-                </div>
+            resultados.map((resultado, index) => (
+            <Sanfona key={index} dados={resultado} />
             ))
         }
 
