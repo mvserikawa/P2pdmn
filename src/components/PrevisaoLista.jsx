@@ -5,7 +5,8 @@ import { Image } from 'primereact/image'
 export default function PrevisaoLista(props) {
     const lista = props.dados.map((item, indice) => {
         return (
-            <Card key={indice} className="mt-3">
+        <div key={indice} className="col-12 md:col-6 lg:col-3 p-2">
+            <Card className="shadow-3 border-round-xl p-3">
                 <div>
                     <strong>Data:</strong> {item.datetime}
                 </div>
@@ -21,7 +22,7 @@ export default function PrevisaoLista(props) {
                 <div>
                     <strong>Descrição:</strong> {item.description}
                 </div>
-                <div>
+                <div className="flex flex-column align-items-center gap-3">
                     <Image
                         src={`http://openweathermap.org/img/wn/${item.icon}@2x.png`}
                         alt="ícone"
@@ -29,10 +30,13 @@ export default function PrevisaoLista(props) {
                     />
                 </div>
             </Card>
+        </div>
         )
     })
 
-    return <div className="grid">{lista}</div>
+   return (
+        <div className="container mx-auto lg:px-8">
+            <div className="grid">{lista}</div>
+        </div>
+    )
 }
-
-export default PrevisaoLista

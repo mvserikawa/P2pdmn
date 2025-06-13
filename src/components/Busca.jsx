@@ -1,11 +1,14 @@
+import React , { useEffect, useState } from 'react'
+import {IconField} from 'primereact/iconfield'
+import {InputText} from 'primereact/inputtext'
+import {InputIcon} from 'primereact/inputicon'
 import axios from 'axios'
 import PrevisaoLista from './PrevisaoLista'
 
 
 const Busca = () => {
-    const [termoDeBusca, setTermoDeBusca] = useState('São Paulo')
+    const [termoDeBusca, setTermoDeBusca] = useState('São Paulo') 
     const [resultados, setResultados] = useState([])
-    const [timeoutId, setTimeoutId] = useState(null)
 
     useEffect(() => {
         const fazerBusca = async () => {
@@ -30,15 +33,18 @@ const Busca = () => {
     }, [resultados.length, termoDeBusca])
 
   return (
-    <div>
-        <IconField iconPosition='left'>
-            <InputIcon className='pi pi-search' />
-            <InputText 
-            placeholder="Buscar..."
-            onChange={ (e) => {setTermoDeBusca(e.target.value)}}
-            value={termoDeBusca}
-            />
-        </IconField>
+     <div className="p-4">
+            <div className="flex justify-center mb-6">
+                <IconField iconPosition="left" className="w-full max-w-md">
+                    <InputIcon className="pi pi-search" />
+                    <InputText
+                        placeholder="Buscar..."
+                        onChange={(e) => setTermoDeBusca(e.target.value)}
+                        value={termoDeBusca}
+                        className="w-full"
+                    />
+                </IconField>
+            </div>
         {
             resultados && resultados.forecasts && (
             <PrevisaoLista dados={resultados.forecasts} />

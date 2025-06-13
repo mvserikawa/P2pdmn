@@ -16,7 +16,7 @@ app.get('/forecast', async (req, res) => {
   try {
     const city = req.query.city
     if (!city) {
-      return res.status(400).json({ error: 'City name is required' })
+      return res.status(400).json({ error: 'É necessário digitar o nome da cidade' })
     }
 
     const response = await weatherClient.get('forecast', {
