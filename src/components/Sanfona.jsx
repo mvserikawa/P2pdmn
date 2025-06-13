@@ -2,7 +2,7 @@ import React from 'react'
 import './Sanfona.css'
 import {Card} from 'primereact/card'
 import { useState } from 'react'
-import Cartao from './Cartao'
+
 
 const Sanfona = ({itens}) => {
 
