@@ -3,7 +3,7 @@ import { Card } from 'primereact/card'
 import { Image } from 'primereact/image'
 
 export default function PrevisaoLista(props) {
-    const lista = props.previsoes.map((item, indice) => {
+    const lista = props.dados.map((item, indice) => {
         return (
             <Card key={indice} className="mt-3">
                 <div>

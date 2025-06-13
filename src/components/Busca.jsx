@@ -3,9 +3,8 @@ import {IconField} from 'primereact/iconfield'
 import {InputText} from 'primereact/inputtext'
 import {InputIcon} from 'primereact/inputicon'
 import axios from 'axios'
-import striptags from 'striptags'
-import Sanfona from './Sanfona'
 import PrevisaoLista from './PrevisaoLista'
+
 
 const Busca = () => {
     const [termoDeBusca, setTermoDeBusca] = useState('São Paulo') 
@@ -43,30 +42,11 @@ const Busca = () => {
             value={termoDeBusca}
             />
         </IconField>
-        {}
-        {resultados?.forecasts?.map((item, index) => (
-  <div 
-    key={index}
-    className="my-2 border border-1 border-400">
-    
-    <div className="border-bottom border-1 border-400 p-2 text-center font-bold">
-      {resultados.city}, {resultados.country}
-    </div>
-
-    <div className="p-2">
-      <p><strong>Data:</strong> {item.datetime}</p>
-      <p><strong>Temp. Mínima:</strong> {item.temp_min}°C</p>
-      <p><strong>Temp. Máxima:</strong> {item.temp_max}°C</p>
-      <p><strong>Umidade:</strong> {item.humidity}%</p>
-      <p><strong>Descrição:</strong> {item.description}</p>
-      <img 
-        src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`} 
-        alt={item.description} 
-      />
-    </div>
-  </div>
-))}
-
+        {
+            resultados && resultados.forecasts && (
+            <PrevisaoLista dados={resultados.forecasts} />
+            )   
+        }
     </div>
   )
 }
