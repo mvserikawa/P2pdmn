@@ -7,13 +7,13 @@ export default function PrevisaoLista(props) {
         return (
             <Card key={indice} className="mt-3">
                 <div>
-                    <strong>Data:</strong> {item.dateTime}
+                    <strong>Data:</strong> {item.datetime}
                 </div>
                 <div>
-                    <strong>Temperatura mínima:</strong> {item.tempMin}°C
+                    <strong>Temperatura mínima:</strong> {item.temp_min}°C
                 </div>
                 <div>
-                    <strong>Temperatura máxima:</strong> {item.tempMax}°C
+                    <strong>Temperatura máxima:</strong> {item.temp_max}°C
                 </div>
                 <div>
                     <strong>Umidade:</strong> {item.humidity}%
