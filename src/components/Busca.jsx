@@ -1,46 +1,58 @@
-import React , { useEffect, useState } from 'react'
-import {IconField} from 'primereact/iconfield'
-import {InputText} from 'primereact/inputtext'
-import {InputIcon} from 'primereact/inputicon'
 import axios from 'axios'
-import striptags from 'striptags'
+import React, { useState, useEffect } from 'react'
+import { IconField } from 'primereact/iconfield'
+import { InputIcon } from 'primereact/inputicon'
+import { InputText } from 'primereact/inputtext'
+import PrevisaoLista from './PrevisaoLista'
 
 const Busca = () => {
-    const [termoDeBusca, setTermoDeBusca] = useState('São Paulo') 
+    const [termoDeBusca, setTermoDeBusca] = useState('São Paulo')
     const [resultados, setResultados] = useState([])
+    const [timeoutId, setTimeoutId] = useState(null)
 
     useEffect(() => {
-        const fazerBusca = async () => {
-            const { data } = await axios.get('http://localhost:3000/search', {
-              params: { 
-                city: termoDeBusca 
-                }     
-            })
-            setResultados(data)
+        if (termoDeBusca.length < 3) {
+            setResultados([])
+            return
         }
-        if(termoDeBusca)
-            fazerBusca()
+
+        if (timeoutId) clearTimeout(timeoutId)
+
+        const novoTimeout = setTimeout(async () => {
+            try {
+                const { data } = await axios.get('http://localhost:3000/forecast', {
+                    params: { city: termoDeBusca }
+                })
+                setResultados([data])
+            } catch (err) {
+                console.error('Erro ao buscar previsão:', err)
+                setResultados([])
+            }
+        }, 2000)
+
+        setTimeoutId(novoTimeout)
+
+        return () => clearTimeout(novoTimeout)
     }, [termoDeBusca])
 
-  return (
-    <div>
-        <IconField iconPosition='left'>
-            <InputIcon className='pi pi-search' />
-            <InputText 
-            placeholder="Buscar..."
-            onChange={ (e) => {setTermoDeBusca(e.target.value)}}
-            value={termoDeBusca}
-            />
-        </IconField>
-        {}
-        {
-            resultados.map((resultado, index) => (
-            <Sanfona key={index} dados={resultado} />
-            ))
-        }
-
-    </div>
-  )
+    return (
+        <div className='border-bottom border border-1 border-400 p-2 text-center font-bold'>
+            <IconField iconPosition='left'>
+                <InputIcon className='pi pi-search'/>
+                <InputText
+                    className='border-bottom border border-1 border-400 font-bold'
+                    placeholder='Buscar cidade...'
+                    onChange={(e) => setTermoDeBusca(e.target.value)}
+                    value={termoDeBusca}
+                />
+            </IconField>
+            {
+                resultados.map((resultado, index) => (
+                    <PrevisaoLista key={index} dados={resultado} />
+                ))
+            }
+        </div>
+    )
 }
 
 export default Busca

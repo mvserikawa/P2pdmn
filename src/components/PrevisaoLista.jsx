@@ -1,36 +1,26 @@
-import React from 'react'
-import { Card } from 'primereact/card'
-import { Image } from 'primereact/image'
-
-export default function PrevisaoLista(props) {
-    const lista = props.previsoes.map((item, indice) => {
-        return (
-            <Card key={indice} className="mt-3">
-                <div>
-                    <strong>Data:</strong> {item.dateTime}
+const PrevisaoLista = ({ dados }) => {
+    return (
+        <div className='mt-3'>
+            <h3>
+                {dados.city}, {dados.country}
+            </h3>
+            {dados.forecasts.slice(0, 5).map((item, index) => (
+                <div key={index} className='my-2 border p-2 rounded'>
+                    <div>{item.datetime}</div>
+                    <div>🌡 Mín: {item.temp_min}°C | Máx: {item.temp_max}°C</div>
+                    <div>💧 Umidade: {item.humidity}%</div>
+                    <div>
+                        <img
+                            src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                            alt={item.description}
+                            className='inline w-8 h-8'
+                        />{' '}
+                        {item.description}
+                    </div>
                 </div>
-                <div>
-                    <strong>Temperatura mínima:</strong> {item.tempMin}°C
-                </div>
-                <div>
-                    <strong>Temperatura máxima:</strong> {item.tempMax}°C
-                </div>
-                <div>
-                    <strong>Umidade:</strong> {item.humidity}%
-                </div>
-                <div>
-                    <strong>Descrição:</strong> {item.description}
-                </div>
-                <div>
-                    <Image
-                        src={`http://openweathermap.org/img/wn/${item.icon}@2x.png`}
-                        alt="ícone"
-                        width="50"
-                    />
-                </div>
-            </Card>
-        )
-    })
-
-    return <div className="grid">{lista}</div>
+            ))}
+        </div>
+    )
 }
+
+export default PrevisaoLista
