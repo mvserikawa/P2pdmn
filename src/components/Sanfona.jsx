@@ -2,7 +2,7 @@ import React from 'react'
 import './Sanfona.css'
 import {Card} from 'primereact/card'
 import { useState } from 'react'
-import Cartao from './Cartao'
+
 
 const Sanfona = ({itens}) => {
 
@@ -14,7 +14,7 @@ const Sanfona = ({itens}) => {
 
     const expressaoJSX = itens.map((item, indice) => {
       const classExibirIcone = indice === indiceAtivo ? 'down': 'right'
-      const classExibirConteudo = indice === indiceAtivo ? 'hidden' : ''
+      const classExibirConteudo = indice === indiceAtivo ? '' : 'hidden'
 
     return (
         <Card key={indice} className='border-1 border-400'>

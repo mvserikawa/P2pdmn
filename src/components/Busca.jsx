@@ -1,26 +1,33 @@
-import React , { useEffect, useState } from 'react'
-import {IconField} from 'primereact/iconfield'
-import {InputText} from 'primereact/inputtext'
-import {InputIcon} from 'primereact/inputicon'
 import axios from 'axios'
+import PrevisaoLista from './PrevisaoLista'
+
 
 const Busca = () => {
-    const [termoDeBusca, setTermoDeBusca] = useState('') 
+    const [termoDeBusca, setTermoDeBusca] = useState('São Paulo')
+    const [resultados, setResultados] = useState([])
+    const [timeoutId, setTimeoutId] = useState(null)
 
     useEffect(() => {
         const fazerBusca = async () => {
-            const { data } = await axios.get('https://openweathermap.org/forecast5#name5', {
-                params: {
-                    q: city,
-                    appid: process.env.OPENWEATHER_KEY,
-                    units: 'metric', 
-                    lang: 'pt_br' 
-                }
+            const { data } = await axios.get('http://localhost:3000/forecast', {
+              params: { 
+                city: termoDeBusca 
+                }     
             })
-            console.log(data)
+            setResultados(data)
         }
-        fazerBusca()
-    }, [termoDeBusca])
+        if (termoDeBusca && resultados.length >= 3) {
+            fazerBusca()
+        } else {
+            const timeoutID = setTimeout(() => {
+                if (termoDeBusca)
+                    fazerBusca()
+            }, 2000)
+            return () => {
+                clearTimeout(timeoutID)
+            }
+        }
+    }, [resultados.length, termoDeBusca])
 
   return (
     <div>
@@ -32,6 +39,11 @@ const Busca = () => {
             value={termoDeBusca}
             />
         </IconField>
+        {
+            resultados && resultados.forecasts && (
+            <PrevisaoLista dados={resultados.forecasts} />
+            )   
+        }
     </div>
   )
 }
